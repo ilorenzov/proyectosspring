@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${titulo}"></title>
+</head>
+<body>
+<h3 th:text="${titulo}"></h3>
+<form th:action="@{/form}" th:object="${usuario}" method="post"> <!--formulario mapeado a objeto usuario-->
+    <div>
+        <label for="nombre">nombre</label>
+        <div>
+            <input type="text"  id="nombre" th:field="*{nombre}"><!--el asterisco indica que se refiere a un mapping de un campo a un atributo de una clase-->
+        </div>
+        <!--      <div th:if="${error !=null && error.containsKey('username')}" th:text="${error.username}" ></div> --><!--comprobamos si existe el objeto , si no es nulo-->
+        <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" ></div> <!--comprobamos si existe el objeto , si no es nulo-->
+    </div>
+
+    <div>
+        <label for="apellido">apellido</label>
+        <div>
+            <input type="text"  id="apellido" th:field="*{apellido}"><!--el asterisco indica que se refiere a un mapping de un campo a un atributo de una clase-->
+        </div>
+        <!--      <div th:if="${error !=null && error.containsKey('username')}" th:text="${error.username}" ></div> --><!--comprobamos si existe el objeto , si no es nulo-->
+        <div th:if="${#fields.hasErrors('username')}" th:errors="*{apellido}" ></div> <!--comprobamos si existe el objeto , si no es nulo-->
+    </div>
+
+    <div>
+        <label for="username">Username</label>
+        <div>
+            <input type="text"  id="username" th:field="*{username}"><!--el asterisco indica que se refiere a un mapping de un campo a un atributo de una clase-->
+        </div>
+  <!--      <div th:if="${error !=null && error.containsKey('username')}" th:text="${error.username}" ></div> --><!--comprobamos si existe el objeto , si no es nulo-->
+        <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" ></div> <!--comprobamos si existe el objeto , si no es nulo-->
+    </div>
+    <div>
+        <label for="email">Email</label>
+        <div>
+            <input type="email" name="email" id="email" th:field="*{email}">
+<!--            <div th:if="${error !=null && error.containsKey('email')}" th:text="${error.email}" ></div>-->
+            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" ></div>
+        </div>
+    </div>
+    <div>
+        <label for="password">Password</label>
+        <div>
+            <input type="password" id="password" th:field="*{password}">
+          <!--  <div th:if="${error !=null && error.containsKey('password')}" th:text="${error.password}" ></div>-->
+            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" ></div>
+        </div>
+    </div>
+    <div>
+        <div>
+            <input type="submit" value="enviar"> </input>
+        </div>
+    </div>
+</form>
+</body>
+</html>
