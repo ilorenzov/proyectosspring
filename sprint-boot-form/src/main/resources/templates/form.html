@@ -8,52 +8,142 @@
 <h3 th:text="${titulo}"></h3>
 <form th:action="@{/form}" th:object="${usuario}" method="post"> <!--formulario mapeado a objeto usuario-->
     <div>
+        <label for="habilitar">Habilitar</label>
+        <div>
+            <input type="checkbox" id="habilitar" th:field="*{habilitar}">
+            <!--el asterisco indica que se refiere a un mapping de un campo a un atributo de una clase-->
+        </div>
+    </div>
+    <div>
+        <label>Genero</label>
+        <div th:each="gen: ${genero}">
+            <input type="radio" th:field="*{genero}" th:value="${gen}">
+            <!--el asterisco indica que se refiere a un mapping de un campo a un atributo de una clase-->
+            <label th:for="${#ids.prev('genero')}" th:text="${gen}"></label>
+        </div>
+        <div th:if="${#fields.hasErrors('genero')}" th:errors="*{genero}"></div>
+
+    </div>
+    <div>
+        <label for="pais">pais</label>
+        <div>
+            <select id="pais" th:field="*{pais}">
+                <option value="">---seleccionar---</option>
+                <!--                <option th:each="pais: ${paises}" th:text="${pais}" th:value="${pais}"></option>-->
+                <!--                <option th:each="pais: ${paisesMap.entrySet()}" th:text="${pais.value}" th:value="${pais.key}"></option>-->
+                <option th:each="pais: ${listaPaises}" th:text="${pais.nombre}" th:value="${pais.id}"></option>
+            </select>
+            <!--  <div th:if="${error !=null && error.containsKey('password')}" th:text="${error.password}" ></div>-->
+            <div th:if="${#fields.hasErrors('pais')}" th:errors="*{pais}"></div>
+        </div>
+    </div>
+    <div>
+        <label>Roles</label>
+        <div th:each="role:${listaRoles}">
+            <input type="checkbox"  th:field="*{roles}" th:value="${role.id}" th:checked="${#lists.contains(usuario.roles,role)}" > <!--se envia en el value el primer valor del put en el form controller, es decir , ROLE_ADMIN,ROLE_USER...-->
+            <label th:for="${#ids.prev('roles')}" th:text="${role.nombre}" ></label>
+            <!--el asterisco indica que se refiere a un mapping de un campo a un atributo de una clase-->
+        </div>
+        <!--      <div th:if="${error !=null && error.containsKey('username')}" th:text="${error.username}" ></div> -->
+        <!--comprobamos si existe el objeto , si no es nulo-->
+        <div th:if="${#fields.hasErrors('identificador')}" th:errors="*{roles}"></div>
+        <!--comprobamos si existe el objeto , si no es nulo-->
+    </div>
+    <div>
+        <label for="identificador">Identificador</label>
+        <div>
+            <input type="text" id="identificador" th:field="*{identificador}">
+            <!--el asterisco indica que se refiere a un mapping de un campo a un atributo de una clase-->
+        </div>
+        <!--      <div th:if="${error !=null && error.containsKey('username')}" th:text="${error.username}" ></div> -->
+        <!--comprobamos si existe el objeto , si no es nulo-->
+        <div th:if="${#fields.hasErrors('identificador')}" th:errors="*{identificador}"></div>
+        <!--comprobamos si existe el objeto , si no es nulo-->
+    </div>
+
+
+    <div>
+        <label for="cuenta">cuenta</label>
+        <div>
+            <input type="number" id="cuenta" th:field="*{cuenta}">
+            <!--el asterisco indica que se refiere a un mapping de un campo a un atributo de una clase-->
+        </div>
+        <!--      <div th:if="${error !=null && error.containsKey('username')}" th:text="${error.username}" ></div> -->
+        <!--comprobamos si existe el objeto , si no es nulo-->
+        <div th:if="${#fields.hasErrors('cuenta')}" th:errors="*{cuenta}"></div>
+        <!--comprobamos si existe el objeto , si no es nulo-->
+    </div>
+
+    <div>
         <label for="nombre">nombre</label>
         <div>
-            <input type="text"  id="nombre" th:field="*{nombre}"><!--el asterisco indica que se refiere a un mapping de un campo a un atributo de una clase-->
+            <input type="text" id="nombre" th:field="*{nombre}">
+            <!--el asterisco indica que se refiere a un mapping de un campo a un atributo de una clase-->
         </div>
-        <!--      <div th:if="${error !=null && error.containsKey('username')}" th:text="${error.username}" ></div> --><!--comprobamos si existe el objeto , si no es nulo-->
-        <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" ></div> <!--comprobamos si existe el objeto , si no es nulo-->
+        <!--      <div th:if="${error !=null && error.containsKey('username')}" th:text="${error.username}" ></div> -->
+        <!--comprobamos si existe el objeto , si no es nulo-->
+        <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
+        <!--comprobamos si existe el objeto , si no es nulo-->
     </div>
 
     <div>
         <label for="apellido">apellido</label>
         <div>
-            <input type="text"  id="apellido" th:field="*{apellido}"><!--el asterisco indica que se refiere a un mapping de un campo a un atributo de una clase-->
+            <input type="text" id="apellido" th:field="*{apellido}">
+            <!--el asterisco indica que se refiere a un mapping de un campo a un atributo de una clase-->
         </div>
-        <!--      <div th:if="${error !=null && error.containsKey('username')}" th:text="${error.username}" ></div> --><!--comprobamos si existe el objeto , si no es nulo-->
-        <div th:if="${#fields.hasErrors('username')}" th:errors="*{apellido}" ></div> <!--comprobamos si existe el objeto , si no es nulo-->
+        <!--      <div th:if="${error !=null && error.containsKey('username')}" th:text="${error.username}" ></div> -->
+        <!--comprobamos si existe el objeto , si no es nulo-->
+        <div th:if="${#fields.hasErrors('username')}" th:errors="*{apellido}"></div>
+        <!--comprobamos si existe el objeto , si no es nulo-->
     </div>
 
     <div>
         <label for="username">Username</label>
         <div>
-            <input type="text"  id="username" th:field="*{username}"><!--el asterisco indica que se refiere a un mapping de un campo a un atributo de una clase-->
+            <input type="text" id="username" th:field="*{username}">
+            <!--el asterisco indica que se refiere a un mapping de un campo a un atributo de una clase-->
         </div>
-  <!--      <div th:if="${error !=null && error.containsKey('username')}" th:text="${error.username}" ></div> --><!--comprobamos si existe el objeto , si no es nulo-->
-        <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" ></div> <!--comprobamos si existe el objeto , si no es nulo-->
+        <!--      <div th:if="${error !=null && error.containsKey('username')}" th:text="${error.username}" ></div> -->
+        <!--comprobamos si existe el objeto , si no es nulo-->
+        <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+        <!--comprobamos si existe el objeto , si no es nulo-->
     </div>
     <div>
         <label for="email">Email</label>
         <div>
             <input type="email" name="email" id="email" th:field="*{email}">
-<!--            <div th:if="${error !=null && error.containsKey('email')}" th:text="${error.email}" ></div>-->
-            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" ></div>
+            <!--            <div th:if="${error !=null && error.containsKey('email')}" th:text="${error.email}" ></div>-->
+            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
         </div>
     </div>
     <div>
         <label for="password">Password</label>
         <div>
             <input type="password" id="password" th:field="*{password}">
-          <!--  <div th:if="${error !=null && error.containsKey('password')}" th:text="${error.password}" ></div>-->
-            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" ></div>
+            <!--  <div th:if="${error !=null && error.containsKey('password')}" th:text="${error.password}" ></div>-->
+            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
         </div>
     </div>
+    <div>
+        <label for="fechaNacimiento">fechaNacimiento</label>
+        <div>
+            <input type="date" id="fechaNacimiento" th:field="*{fechaNacimiento}">
+            <!--el asterisco indica que se refiere a un mapping de un campo a un atributo de una clase-->
+        </div>
+        <!--      <div th:if="${error !=null && error.containsKey('username')}" th:text="${error.username}" ></div> -->
+        <!--comprobamos si existe el objeto , si no es nulo-->
+        <div th:if="${#fields.hasErrors('fechaNacimiento')}" th:errors="*{fechaNacimiento}"></div>
+        <!--comprobamos si existe el objeto , si no es nulo-->
+    </div>
+
     <div>
         <div>
             <input type="submit" value="enviar"> </input>
         </div>
     </div>
+<input type="hidden" th:field="*{valorSecreto}" >
+
 </form>
 </body>
 </html>
