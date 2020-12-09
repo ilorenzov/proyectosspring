@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="layout/layout :: head"></head>
+<body>
+<header th:replace="layout/layout :: header">
+
+</header>
+<div class="container">
+    <div class="card bg-primary">
+        <div class="card-header" th:text="${titulo}"></div>
+        <div class="card-body">
+            <div th:object="${cliente}" th:remove="tag">
+                <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                    <li th:each="err: ${#fields.errors('*')}" th:text="${err}"></li>
+                </ul>
+
+            </div>
+            <form th:action="@{/form}" method="post" th:object="${cliente}" enctype="multipart/form-data">
+                <table class="table table-border">
+                    <tr>
+                        <td>Nombre</td>
+                        <td><input class="form-control" type="text" th:field="*{nombre}"
+                                   th:errorclass="'form-control alert-danger'"></td>
+                        <td class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></td>
+                    </tr>
+                    <tr>
+                        <td>Apellido</td>
+                        <td><input class="form-control" th:field="*{apellido}"
+                                   th:errorclass="'form-control alert-danger'"
+                                   type="text"></td>
+                        <td class=" text-danger" th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}"></td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td><input class="form-control" th:field="*{email}" th:errorclass="'form-control alert-danger'"
+                                   type="text"></td>
+                        <td class=" text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></td>
+                    </tr>
+                    <tr>
+                        <td>Fecha</td>
+                        <td><input class="form-control" th:field="*{createAt}"
+                                   th:errorclass="'form-control alert-danger'"
+                                   type="text"></td>
+                        <td class="text-danger" th:if="${#fields.hasErrors('createAt')}" th:errors="*{createAt}"></td>
+
+                    </tr>
+                    <tr>
+                        <td>Foto</td>
+                        <td><input class="form-control"  name="file"  type="file"></td>
+                       <!-- <td class="text-danger" th:if="${#fields.hasErrors('createAt')}" th:errors="*{createAt}"></td>-->
+
+                    </tr>
+
+
+                </table>
+                <input class="btn btn-primary form-control" type="submit" value="Crear cliente">
+            </form>
+        </div>
+    </div>
+</div>
+<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>
